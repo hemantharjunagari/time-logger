@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  time-logger:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    develop:
+      watch:
+        - path: ./src
+          action: rebuild
+        - path: ./pom.xml
+          action: rebuild
+        - path: ./src/main/resources/application.properties
+          target: /app/src/main/resources/application.properties
+          action: sync
